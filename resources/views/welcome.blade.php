@@ -1,7 +1,7 @@
 
-@extends('public.master')
+@extends('public.resto')
 @section('accueilactive', 'active')
-@section('content')
+@section('contentresto')
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="d-flex align-items-center">
     <div class="container position-relative text-center text-lg-start" data-aos="zoom-in" data-aos-delay="100">

@@ -47,6 +47,7 @@ Route::get('/restauran/{id}', [RestaurantPublicController::class, 'show'])->name
 
 
 Route::get('/restaurant/{id}', [RestaurantPublicController::class, 'show'])->name('restaurant.public');
+Route::get('/restaurant/{id}/promotions', [RestaurantPublicController::class, 'promotions'])->name('restaurant.promotions');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

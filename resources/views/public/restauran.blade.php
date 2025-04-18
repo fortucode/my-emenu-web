@@ -27,7 +27,9 @@
 
         <div class="btns mt-4">
           <a href="#menu" class="btn-menu animated fadeInUp scrollto">Voir le Menu</a>
-          <a href="#promo" class="btn-book animated fadeInUp scrollto">Promotions</a>
+          <!--<a href="#promo" class="btn-book animated fadeInUp scrollto">Promotions</a>-->
+          <a href="{{ route('restaurant.promotions', $restaurant->id) }}" class="btn-book animated fadeInUp">Promotions</a>
+
         </div>
       </div>
 

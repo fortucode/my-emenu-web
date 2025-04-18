@@ -258,6 +258,29 @@
 
   <!-- Template Main JS File -->
   <script src="templatemenu/assets/js/main.js"></script>
+  
+  <script src="{{ asset('templatemenu/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var menuIsotope = new Isotope('.menu-container', {
+        itemSelector: '.menu-item',
+        layoutMode: 'fitRows'
+      });
+  
+      const filters = document.querySelectorAll('#menu-flters li');
+      filters.forEach(function (el) {
+        el.addEventListener('click', function () {
+          filters.forEach(x => x.classList.remove('filter-active'));
+          this.classList.add('filter-active');
+  
+          const filterValue = this.getAttribute('data-filter');
+          menuIsotope.arrange({ filter: filterValue });
+        });
+      });
+    });
+  </script>
+  
 
 </body>
 
