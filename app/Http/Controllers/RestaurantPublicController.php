@@ -14,20 +14,40 @@ class RestaurantPublicController extends Controller
 {
     //
     public function show($id)
-    {
-        $restaurant = Restaurant::findOrFail($id);
-        $profil = Profil::where('id_restaurant', $id)->first();
+{
+    $restaurant = Restaurant::with(['plats', 'combos', 'promotions'])->findOrFail($id);
+    $profil = Profil::where('id_restaurant', $id)->first();
 
-        //$promotions = \App\Models\Promotion::where('id_restaurant', $id)
-        //->where('date_fin', '>=', Carbon::today())
-        //->get();
-        $plats = \App\Models\Plat::where('id_restaurant', $id)->get();
-        $combos = Combo::where('id_restaurant', $id)->get();
-        //dd($restaurant, $profil, $promotions, $plats, $combos);
+    $promotion = $restaurant->promotions()
+                    ->where('date_deb', '<=', now())
+                    ->where('date_fin', '>=', now())
+                    ->first();
 
-         return view('public.restauran', compact('restaurant', 'profil', 'plats', 'combos'));
-        //return view('public.restaurant', compact('restaurant', 'profil'));
-    }
+    $plats = $restaurant->plats->map(function ($plat) use ($promotion) {
+        if ($promotion) {
+            $plat->prix_reduit = $promotion->type_remise === 'pourcentage'
+                ? $plat->prix - ($plat->prix * ($promotion->valeur_remise / 100))
+                : $plat->prix - $promotion->valeur_remise;
+        } else {
+            $plat->prix_reduit = null;
+        }
+        return $plat;
+    });
+
+    $combos = $restaurant->combos->map(function ($combo) use ($promotion) {
+        if ($promotion) {
+            $combo->prix_reduit = $promotion->type_remise === 'pourcentage'
+                ? $combo->prix_special - ($combo->prix_special * ($promotion->valeur_remise / 100))
+                : $combo->prix_special - $promotion->valeur_remise;
+        } else {
+            $combo->prix_reduit = null;
+        }
+        return $combo;
+    });
+
+    return view('public.restauran', compact('restaurant', 'profil', 'promotion', 'plats', 'combos'));
+}
+
 
     public function liste()
     {

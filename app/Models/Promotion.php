@@ -39,6 +39,24 @@ class Promotion extends Model
 		'desc_prom',
 		'date_deb',
 		'date_fin',
-		'id_restaurant'
+		'id_restaurant',
+		'type_remise',
+    	'remise'
 	];
+
+
+
+    // ... tes propriétés $table, $fillable, etc.
+
+    public function calculerPrixReduit($prix_initial)
+    {
+        if ($this->type_remise == 'percent') {
+            return round($prix_initial - ($prix_initial * $this->remise / 100), 0);
+        } elseif ($this->type_remise == 'fixed') {
+            return max(0, round($prix_initial - $this->remise, 0));
+        }
+        return $prix_initial;
+    }
+
+
 }

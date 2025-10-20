@@ -85,7 +85,7 @@ class PlatController extends Controller
         $plat = Plat::where('id_restaurant', auth()->id())->findOrFail($id);
 
         $categorie = Category::all();
-        dd($plat);
+       // dd($plat);
 
         return view('root.editplat', compact('plat', 'categorie'));
     }

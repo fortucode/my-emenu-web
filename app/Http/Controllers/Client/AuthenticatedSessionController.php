@@ -15,14 +15,17 @@ class AuthenticatedSessionController extends Controller
 
     public function store(Request $request)
     {
-        $credentials = $request->validate([
+        $validated = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if (Auth::guard('client')->attempt($credentials)) {
+        if (Auth::guard('client')->attempt($validated)) {
             $request->session()->regenerate();
-            return redirect()->intended('/client/home');
+            //return redirect()->intended('/');
+            return redirect()->intended('/');
+            
+
         }
 
         return back()->withErrors([

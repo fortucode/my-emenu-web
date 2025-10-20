@@ -22,9 +22,24 @@
         @foreach($plats as $plat)
           <div class="col-lg-6 menu-item filter-plat">
             <img src="{{ asset('storage/' . $plat->photo_plat) }}" class="menu-img" alt="{{ $plat->nom_plat }}">
-            <div class="menu-content">
-              <a href="#">{{ $plat->nom_plat }}</a><span>{{ number_format($plat->prix, 0, ',', ' ') }} FCFA</span>
-            </div>
+            <div class="menu-content d-flex justify-content-between align-items-center">
+  <a href="#">{{ $plat->nom_plat }}</a>
+  <span>
+   @if($plat->prix_reduit && $plat->prix_reduit < $plat->prix)
+    <del class="text-muted me-2">{{ number_format($plat->prix, 0, ',', ' ') }} FCFA</del>
+    <strong class="text-danger">{{ number_format($plat->prix_reduit, 0, ',', ' ') }} FCFA</strong>
+@else
+    {{ number_format($plat->prix, 0, ',', ' ') }} FCFA
+@endif
+
+  </span>
+  <button class="btn btn-sm btn-success add-to-cart" 
+      data-type="plat" 
+      data-id="{{ $plat->id_plat }}">
+      +
+  </button>
+</div>
+
             <div class="menu-ingredients">
               {{ $plat->desc_plat }}
             </div>
@@ -37,13 +52,38 @@
             @if($combo->photo)
               <img src="{{ asset('storage/' . $combo->photo) }}" class="menu-img" alt="{{ $combo->nom_combo }}">
             @endif
-            <div class="menu-content">
-              <a href="#">{{ $combo->nom_combo }}</a><span>{{ number_format($combo->prix_special, 0, ',', ' ') }} FCFA</span>
-            </div>
+            <div class="menu-content d-flex justify-content-between align-items-center">
+  <a href="#">{{ $combo->nom_combo }}</a>
+  <span>
+@if($combo->prix_reduit && $combo->prix_reduit < $combo->prix_special)
+    <del class="text-muted me-2">{{ number_format($combo->prix_special, 0, ',', ' ') }} FCFA</del>
+    <strong class="text-danger">{{ number_format($combo->prix_reduit, 0, ',', ' ') }} FCFA</strong>
+@else
+    {{ number_format($combo->prix_special, 0, ',', ' ') }} FCFA
+@endif
+
+  </span>
+  <button class="btn btn-sm btn-success add-to-cart" 
+      data-type="combo" 
+      data-id="{{ $combo->id_combo }}">
+      +
+  </button>
+</div>
+
             <div class="menu-ingredients">
-              {{ $combo->desc_combo }}
-            </div>
-          </div>
+    @if($combo->plats && $combo->plats->count() > 0)
+        <ul class="ps-3 m-0">
+            @foreach($combo->plats as $plat)
+                <li>
+                    {{ $plat->nom_plat }} (x{{ $plat->pivot->quantite }})
+                </li>
+            @endforeach
+        </ul>
+    @else
+        <em>Aucun plat enregistré dans ce combo</em>
+    @endif
+</div>
+
         @endforeach
   
       </div>

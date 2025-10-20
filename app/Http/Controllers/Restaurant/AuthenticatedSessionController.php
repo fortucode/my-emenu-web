@@ -66,6 +66,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('restaurant.login');
+        return redirect()->intended('/');
     }
 }

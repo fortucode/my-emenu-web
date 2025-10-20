@@ -22,12 +22,13 @@ class PromotionController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'nom_prom' => 'required|string|max:255',
-            'desc_prom' => 'required|string',
-            //'prix_promo' => 'required|numeric',
-            'date_deb' => 'required|date',
-            'date_fin' => 'required|date|after_or_equal:date_deb',
+       $validated = $request->validate([
+            'nom_prom'   => 'required|string|max:255',
+            'desc_prom'  => 'required|string',
+            'date_deb'   => 'required|date',
+            'date_fin'   => 'required|date|after_or_equal:date_deb',
+            'type_remise'=> 'required|in:percent,fixed',
+            'remise'     => 'required|numeric|min:0',
         ]);
 
         Promotion::create(array_merge($validated, [
@@ -46,11 +47,12 @@ class PromotionController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nom_prom' => 'required|string|max:255',
-            'desc_prom' => 'required|string',
-           // 'prix_promo' => 'required|numeric',
-            'date_deb' => 'required|date',
-            'date_fin' => 'required|date|after_or_equal:date_debut',
+            'nom_prom'   => 'required|string|max:255',
+            'desc_prom'  => 'required|string',
+            'date_deb'   => 'required|date',
+            'date_fin'   => 'required|date|after_or_equal:date_deb',
+            'type_remise'=> 'required|in:percent,fixed',
+            'remise'     => 'required|numeric|min:0',
         ]);
 
         $promotion = Promotion::where('id_restaurant', auth()->id())->findOrFail($id);

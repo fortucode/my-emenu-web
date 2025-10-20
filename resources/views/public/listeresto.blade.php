@@ -1,6 +1,6 @@
-@extends('public.master')
+@extends('public.resto')
 @section('restoactive', 'active')
-@section('content')
+@section('contentresto')
 
 <section id="about" class="about">
     <div class="container" data-aos="fade-up">

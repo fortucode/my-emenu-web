@@ -94,7 +94,9 @@
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Book a table</a>
+      
+    
+      <!--<a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Book a table</a>-->
 
     </div>
   </header><!-- End Header -->
@@ -258,6 +260,7 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
+      
   </footer><!-- End Footer -->
 
   <div id="preloader"></div>
@@ -273,6 +276,9 @@
 
   <!-- Template Main JS File -->
   <script src="templatemenu/assets/js/main.js"></script>
+
+  <!-- Modale Bootstrap -->
+
 
 </body>
 

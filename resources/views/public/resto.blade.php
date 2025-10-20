@@ -27,6 +27,41 @@
 
   <!-- Template Main CSS File -->
   <link href="{{asset('templatemenu/assets/css/style.css')}}" rel="stylesheet">
+  <style>
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8); /* fond noir transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.popup-content {
+    background-color: #222;
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+    position: relative;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 25px;
+    cursor: pointer;
+    color: white;
+}
+</style>
+
 
   <!-- =======================================================
   * Template Name: Restaurantly - v3.1.0
@@ -60,25 +95,55 @@
   <header id="header" class="fixed-top d-flex align-items-cente">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-lg-between">
 
-      <h1 class="logo me-auto me-lg-0"><a href="index.html">Restaurantly</a></h1>
+      <h1 class="logo me-auto me-lg-0"><a href="index.html">GoMenu</a></h1>
       <!-- Uncomment below if you prefer to use an image logo -->
-      < <a href="index.html" class="logo me-auto me-lg-0"><img src="templatemenu/assets/img/logo.png" alt="" class="img-fluid"></a>-->
+      <a href="index.html" class="logo me-auto me-lg-0"><img src="templatemenu/assets/img/logo.png" alt="" class="img-fluid"></a>
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul>
           <!--<li><a class="nav-link scrollto @yield('accueilactive')" href="{{url('/')}}">Home</a></li>-->
-          <li><a class="nav-link scrollto" href="{{url('/restauran')}}">About</a></li>
+          {{-- <li><a class="nav-link scrollto" href="{{url('/restauran')}}">About</a></li> --}}
           <!--<li><a class="nav-link scrollto" href="#menu">Menu</a></li>-->
           <li><a class="nav-link scrollto @yield('promoactive')" href="{{url('/promo')}}">Nos Promotions</a></li>
          <!--<li><a class="nav-link scrollto" href="#events">Events</a></li>-->
           <li><a class="nav-link scrollto @yield('restoactive')" href="{{route('restaurants.liste')}}">catalogue</a></li>
-          <li><a class="nav-link scrollto" href="#gallery">Gallery</a></li>
           
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+ <!-- Menu déroulant Se connecter -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+             data-bs-toggle="dropdown" aria-expanded="false">
+             Se connecter
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <li>
+              <a class="dropdown-item" href="{{ url('/login') }}">
+                <i class="bi bi-shop"></i> Restaurant
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="{{ route('client.login') }}">
+                <i class="bi bi-person"></i> Client
+              </a>
+            </li>
+          </ul>
+        </li>          <li><button onclick="openPopup()" class="book-a-table-btn scrollto d-none d-lg-flex">Espace client</button>
+</li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
-      <a href="#book-a-table" class="book-a-table-btn scrollto d-none d-lg-flex">Book a table</a>
+      <!-- Bouton pour ouvrir le popup -->
+
+<!-- Contenu du popup btn btn-primary  -->
+<div id="clientPopup" class="popup-overlay" style="display: none;">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        
+        <div id="popup-inner-content">
+            Chargement...
+        </div>
+    </div>
+</div>
+
 
     </div>
   </header><!-- End Header -->
@@ -86,7 +151,7 @@
     
         @yield('contentresto')
 
-    <!-- ======= Contact Section ======= -->
+    {{-- <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">
       <div class="container" data-aos="fade-up">
 
@@ -167,7 +232,7 @@
         </div>
 
       </div>
-    </section><!-- End Contact Section -->
+    </section><!-- End Contact Section --> --}}
 
   </main><!-- End #main -->
 
@@ -179,12 +244,11 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="footer-info">
-              <h3>Restaurantly</h3>
+              <h3>GoMenu</h3>
               <p>
-                A108 Adam Street <br>
-                NY 535022, USA<br><br>
-                <strong>Phone:</strong> +1 5589 55488 55<br>
-                <strong>Email:</strong> info@example.com<br>
+               Lomé, TOGO <br><br>
+                <strong>Phone:</strong> +228 70 51 61 04<br>
+                <strong>Email:</strong> fortunaakpadji@gmail.com<br>
               </p>
               <div class="social-links mt-3">
                 <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -193,7 +257,7 @@
                 <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a>
                 <a href="#" class="linkedin"><i class="bx bxl-linkedin"></i></a>
               </div>
-            </div>
+            </div> 
           </div>
 
           <!--<div class="col-lg-2 col-md-6 footer-links">
@@ -243,6 +307,68 @@
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
+
+    <!--<script>
+      document.addEventListener('DOMContentLoaded', function () {
+          const modal = document.getElementById('clientDashboardModal');
+          modal.addEventListener('show.bs.modal', function () {
+              const content = document.getElementById('clientDashboardBody');
+              content.innerHTML = 'Chargement...';
+      
+              fetch("{{ route('client.dashboard.ajax') }}")
+                  .then(res => res.text())
+                  .then(html => {
+                      content.innerHTML = html;
+                  })
+                  .catch(() => {
+                      content.innerHTML = '<p class="text-danger">Erreur de chargement</p>';
+                  });
+          });
+      });
+      </script>-->
+
+      <!--<script>
+        $(document).on('click', '.btn-ouvrir-dashboard', function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: '/client/dashboard-partial',
+        method: 'GET',
+        success: function(data) {
+            $('#clientModalContent').html(data);
+            $('#clientModal').modal('show');
+        },
+        error: function() {
+            alert('Erreur lors du chargement du tableau de bord');
+        }
+    });
+});
+
+      </script>-->
+
+      <script>
+        function openPopup() {
+         const popup = document.getElementById("clientPopup");
+          popup.style.display = "flex";
+
+        const content = document.getElementById("popup-inner-content");
+          content.innerHTML = "Chargement...";
+
+          fetch("{{ route('client.dashboard.ajax') }}")
+          .then(res => res.text())
+          .then(html => {
+            content.innerHTML = html;
+            })
+          .catch(() => {
+            content.innerHTML = "<p class='text-danger'>Erreur de chargement</p>";
+           });
+}
+
+function closePopup() {
+    document.getElementById("clientPopup").style.display = "none";
+}
+</script>
+
+      
   </footer><!-- End Footer -->
 
   <!--<div id="preloader"></div>
@@ -280,7 +406,20 @@
       });
     });
   </script>
-  
+<!-- ✅ Modale Bootstrap proprement fermée -->
+<div class="modal fade" id="clientModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mon espace client</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+      </div>
+      <div class="modal-body" id="clientModalContent">
+        <!-- Contenu chargé par AJAX ici -->
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 

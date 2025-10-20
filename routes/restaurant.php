@@ -6,6 +6,7 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\controllers\PlatController;
 use App\Http\Controllers\ComboController;
 use App\Http\Controllers\PromotionController;
+use App\Http\Controllers\CommandeController;
 use App\Http\Controllers\ProfilController;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,20 @@ use Illuminate\Support\Facades\Route;
         Route::get('/promotion/{id}/edit', [PromotionController::class, 'edit'])->name('promotions.edit');
         Route::put('/promotion/{id}', [PromotionController::class, 'update'])->name('promotions.update');
         Route::delete('/promotion/{id}', [PromotionController::class, 'destroy'])->name('promotions.destroy');
+
+        //commandes
+
+
+    // Afficher toutes les commandes pour le restaurant connecté
+    Route::get('/commande', [CommandeController::class, 'index'])->name('commandes.index');
+
+    // Page pour modifier le statut d'une commande
+    Route::get('/commande/{id}/edit', [CommandeController::class, 'edit'])->name('commandes.edit');
+
+    // Mettre à jour le statut de la commande
+    Route::put('/commande/{id}', [CommandeController::class, 'update'])->name('commandes.update');
+
+
 
         //routes de profil
         Route::get('/profil', [ProfilController::class, 'edit'])->name('profil.edit');

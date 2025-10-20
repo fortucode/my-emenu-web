@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('root.layout.master')
 @section('content')
 
 <form action="{{ route('plats.update', $plat->id_plat) }}" method="POST" enctype="multipart/form-data">

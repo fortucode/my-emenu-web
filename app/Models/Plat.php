@@ -48,4 +48,12 @@ class Plat extends Model
 	{
     	return $this->belongsTo(Category::class, 'id_cat', 'id_cat');
 	}
+
+	public function combos()
+	{
+    	return $this->belongsToMany(Combo::class, 'contenir', 'id_plat', 'id_combo')
+                ->withPivot('quantite')
+                ->withTimestamps();
+	}
+
 }

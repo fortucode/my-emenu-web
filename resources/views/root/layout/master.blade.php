@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Connect Plus</title>
+    <title>MON ESPACE</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{asset('tempadmin/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
     <link rel="stylesheet" href="{{asset('tempadmin/assets/vendors/flag-icon-css/css/flag-icon.min.css')}}">
@@ -49,15 +49,18 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                 <div class="nav-profile-img">
-                  <img src="tempadmin/assets/images/faces/face28.png" alt="image">
+                  <img src="{{ asset('storage/' . Auth::guard('restaurant')->user()->profil->photo) }}" 
+     alt="Logo du resto" class="nav-profile-img">
+
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black">Henry Klein</p>
+                  <p class="mb-1 text-black">{{Auth::guard('restaurant')->user()->name_resto}}</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown dropdown-menu-right p-0 border-0 font-size-sm" aria-labelledby="profileDropdown" data-x-placement="bottom-end">
                 <div class="p-3 text-center bg-primary">
-                  <img class="img-avatar img-avatar48 img-avatar-thumb" src="tempadmin/assets/images/faces/face28.png" alt="">
+<img src="{{ asset('storage/' . Auth::guard('restaurant')->user()->profil->photo) }}" 
+     alt="Logo du resto" class="nav-profile-img">
                 </div>
                 <div class="p-2">
                   
@@ -89,9 +92,8 @@
         <!-- partial:partials/_sidebar.html -->
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
           <ul class="nav">
-            <li class="nav-item nav-category">Main</li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="{{route('dashboard')}}">
                 <span class="icon-bg"><i class="mdi mdi-cube menu-icon"></i></span>
                 <span class="menu-title">Dashboard</span>
               </a>
@@ -108,7 +110,6 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="{{route('plats.index')}}">liste des plats</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{route('plats.create')}}">ajouter un plat</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
                 </ul>
               </div>
             </li>
@@ -124,7 +125,6 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="{{route('combo.index')}}">Liste des combos</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{route('combo.create')}}">Ajouter un combo</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
                 </ul>
               </div>
             </li>
@@ -139,7 +139,6 @@
                 <ul class="nav flex-column sub-menu">
                   <li class="nav-item"> <a class="nav-link" href="{{route('promotions.index')}}">Liste des promotions</a></li>
                   <li class="nav-item"> <a class="nav-link" href="{{route('promotions.create')}}">Ajouter une promotion</a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
                 </ul>
               </div>
             </li>
@@ -148,16 +147,13 @@
             <li class="nav-item">
               <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false" aria-controls="auth">
                 <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-                <span class="menu-title">User Pages</span>
+                <span class="menu-title">Gestion des commandes</span>
                 <i class="menu-arrow"></i>
               </a>
               <div class="collapse" id="auth">
                 <ul class="nav flex-column sub-menu">
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/blank-page.html"> Blank Page </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-404.html"> 404 </a></li>
-                  <li class="nav-item"> <a class="nav-link" href="pages/samples/error-500.html"> 500 </a></li>
+                  <li class="nav-item"> <a class="nav-link" href="{{route('commandes.index')}}"> liste </a></li>
+                  
                 </ul>
               </div>
             </li>
@@ -167,15 +163,15 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <div class="d-flex align-items-center">
-                      <div class="sidebar-profile-img">
+                      {{-- <div class="sidebar-profile-img">
                         <img src="tempadmin/assets/images/faces/face28.png" alt="image">
                       </div>
                       <div class="sidebar-profile-text">
                         <p class="mb-1">Henry Klein</p>
-                      </div>
+                      </div> --}}
                     </div>
                   </div>
-                  <div class="badge badge-danger">3</div>
+                  {{-- <div class="badge badge-danger">3</div> --}}
                 </div>
               </div>
             </li>

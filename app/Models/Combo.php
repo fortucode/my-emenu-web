@@ -26,6 +26,8 @@ class Combo extends Model
 {
 	protected $table = 'combo';
 	protected $primaryKey = 'id_combo';
+	public $incrementing = true;
+    protected $keyType = 'int';
 
 	protected $casts = [
 		'prix_special' => 'float'
@@ -37,4 +39,12 @@ class Combo extends Model
 		'prix_special',
 		'id_restaurant'
 	];
+
+	public function plats()
+	{
+    	return $this->belongsToMany(Plat::class, 'contenir', 'id_combo', 'id_plat')
+                ->withPivot('quantite')
+                ->withTimestamps();
+	}
+
 }

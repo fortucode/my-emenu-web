@@ -16,6 +16,7 @@
                 <th>Nom</th>
                 <th>Description</th>
                 <th>Prix spécial</th>
+                <th>Composant</th>
                 <th>Image</th>
                 <th>Actions</th>
             </tr>
@@ -26,6 +27,22 @@
                     <td>{{ $combo->nom_combo }}</td>
                     <td>{{ $combo->desc_combo }}</td>
                     <td>{{ $combo->prix_special }} F CFA</td>
+                    <td>
+            {{-- <ul>
+                @foreach($combo->plats as $plat)
+                    <li>{{ $plat->nom_plat }} (x{{ $plat->pivot->quantite }})</li>
+                @endforeach
+            </ul> --}}
+<p>
+    @php
+        $liste = $combo->plats->map(function($plat) {
+            return $plat->pivot->quantite . ' ' . $plat->nom_plat;
+        })->implode(' + ');
+    @endphp
+
+    {{ $liste }}
+</p>
+        </td>
                     <td>
                         @if($combo->image)
                             <img src="{{ asset('storage/' . $combo->image) }}" width="80">

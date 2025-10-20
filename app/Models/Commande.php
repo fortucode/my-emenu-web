@@ -36,4 +36,18 @@ class Commande extends Model
 		'statut',
 		'id_client'
 	];
+	 public function client()
+    {
+        return $this->belongsTo(Client::class, 'id_client');
+    }
+
+    // Relation avec les plats
+//     public function details()
+// {
+//     return $this->hasMany(Valider::class, 'id_com', 'id_com');
+// }
+public function valider()
+{
+    return $this->hasMany(\App\Models\Valider::class, 'id_com');
+}
 }

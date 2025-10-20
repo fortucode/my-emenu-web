@@ -5,9 +5,12 @@
  */
 
 namespace App\Models;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+//use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Client
@@ -23,8 +26,9 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @package App\Models
  */
-class Client extends Model
+class Client extends Authenticatable
 {
+	use Notifiable;
 	protected $table = 'client';
 
 	protected $casts = [

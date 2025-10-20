@@ -17,7 +17,6 @@ return new class extends Migration
             $table->text('desc_combo');
             $table->decimal('prix_special', 8, 2);
             $table->unsignedBigInteger('id_restaurant');
-
             $table->timestamps();
         });
     }

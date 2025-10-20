@@ -56,5 +56,22 @@ class Restaurant extends Authenticatable
 	{
     	return $this->hasOne(\App\Models\Profil::class, 'id_restaurant', 'id');
 	}
+	
+	public function promotions()
+	{
+    return $this->hasMany(Promotion::class, 'id_restaurant');
+	}
+
+	public function plats()
+	{
+    return $this->hasMany(Plat::class, 'id_restaurant');
+	}
+
+	public function combos()
+	{
+    return $this->hasMany(Combo::class, 'id_restaurant');
+	}
+
+
 
 }
