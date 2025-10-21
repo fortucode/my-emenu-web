@@ -38,7 +38,8 @@ Route::prefix('admin')->group(function () {
         Route::put('/categorie/{id}', [CategorieController::class, 'update'])->name('categorie.update');
         Route::delete('/categorie/{id}', [CategorieController::class, 'destroy'])->name('categorie.destroy');
 
-       
+       Route::get('/restaurants', [App\Http\Controllers\Admin\RestaurantController::class, 'index'])->name('admin.restaurants');
+       Route::post('/admin/restaurants/{restaurant}/toggle', [App\Http\Controllers\Admin\RestaurantController::class, 'toggle'])->name('admin.restaurants.toggle');
         Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
                     ->name('admin.logout');
         

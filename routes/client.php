@@ -17,8 +17,8 @@ Route::prefix('client')->group(function () {
 
     
     //affichage du panier
-    Route::get('panier/ajax', [\App\Http\Controllers\Client\ClientDashboardController::class, 'getPanierAjax'])
-    ->name('client.panier.ajax');
+   Route::get('panier', [\App\Http\Controllers\Client\ClientDashboardController::class, 'getPanier'])
+    ->name('client.panier.show');
 
     //validation panier
 Route::post('panier/checkout', [\App\Http\Controllers\Client\ClientDashboardController::class, 'checkoutPanier'])

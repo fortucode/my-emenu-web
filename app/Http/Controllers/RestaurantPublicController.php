@@ -15,7 +15,12 @@ class RestaurantPublicController extends Controller
     //
     public function show($id)
 {
+    
     $restaurant = Restaurant::with(['plats', 'combos', 'promotions'])->findOrFail($id);
+    if (!$restaurant->actif) {
+        // Soit on redirige vers une page d’erreur, soit on affiche un message personnalisé
+        return redirect()->route('home')->with('error', 'Ce restaurant est temporairement inactif sur notre site.');
+    }
     $profil = Profil::where('id_restaurant', $id)->first();
 
     $promotion = $restaurant->promotions()

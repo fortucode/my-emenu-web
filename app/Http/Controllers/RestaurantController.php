@@ -12,4 +12,5 @@ class RestaurantController extends Controller
     public function home(){
        return view('root.home');
     }
+    
 }

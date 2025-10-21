@@ -24,11 +24,12 @@ class ClientDashboardController extends Controller
 
         return view('client.dashboard-partial', compact('client', 'commandes'));
     }
-   public function getPanierAjax(Request $request)
+   // ✅ Page du panier
+    public function getPanier(Request $request)
     {
         $panier = json_decode($request->cookie('panier', '[]'), true);
 
-        $items = collect($panier)->map(function($item) {
+        $items = collect($panier)->map(function ($item) {
             if ($item['type'] === 'plat') {
                 $item['plat'] = Plat::find($item['id']);
             } else {
@@ -37,13 +38,13 @@ class ClientDashboardController extends Controller
             return (object) $item;
         });
 
-        $total = collect($items)->sum(function($item){
+        $total = collect($items)->sum(function ($item) {
             return ($item->prix_reduit ?? $item->prix) * $item->quantite;
         });
 
-        return view('client.panier-partial', [
+        return view('client.panier', [
             'items' => $items,
-            'panier' => (object)['total' => $total]
+            'total' => $total,
         ]);
     }
 
@@ -54,7 +55,9 @@ class ClientDashboardController extends Controller
     $client = Auth::guard('client')->user();
 
     // Récupérer le panier depuis le cookie
-    $panier = json_decode($request->cookie('panier', '[]'), true);
+    //$panier = json_decode($request->cookie('panier', '[]'), true);
+    $panier = json_decode(urldecode($request->cookie('panier', '[]')), true);
+
 
     if (empty($panier)) {
         return back()->with('error', 'Votre panier est vide.');

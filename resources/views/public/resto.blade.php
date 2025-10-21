@@ -126,7 +126,9 @@
               </a>
             </li>
           </ul>
-        </li>          <li><button onclick="openPopup()" class="book-a-table-btn scrollto d-none d-lg-flex">Espace client</button>
+        </li>          
+        
+        <li><button onclick="openPopup()" class="book-a-table-btn scrollto d-none d-lg-flex">Espace client</button>
 </li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
@@ -375,12 +377,12 @@ function closePopup() {
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>-->
 
   <!-- Vendor JS Files -->
-  <script src="templatemenu/assets/vendor/aos/aos.js"></script>
-  <script src="templatemenu/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="templatemenu/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="templatemenu/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="templatemenu/assets/vendor/php-email-form/validate.js"></script>
-  <script src="templatemenu/assets/vendor/swiper/swiper-bundle.min.js"></script>
+  <script src="{{asset('templatemenu/assets/vendor/aos/aos.js')}}"></script>
+  <script src="{{asset('templatemenu/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('templatemenu/assets/vendor/glightbox/js/glightbox.min.js')}}"></script>
+  <script src="{{asset('templatemenu/assets/vendor/isotope-layout/isotope.pkgd.min.js')}}"></script>
+  <script src="{{asset('templatemenu/assets/vendor/php-email-form/validate.js')}}"></script>
+  <script src="{{asset('templatemenu/assets/vendor/swiper/swiper-bundle.min.js')}}"></script>
 
   <!-- Template Main JS File -->
   <script src="templatemenu/assets/js/main.js"></script>
@@ -405,21 +407,74 @@ function closePopup() {
         });
       });
     });
-  </script>
-<!-- ✅ Modale Bootstrap proprement fermée -->
-<div class="modal fade" id="clientModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Mon espace client</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-      </div>
-      <div class="modal-body" id="clientModalContent">
-        <!-- Contenu chargé par AJAX ici -->
-      </div>
-    </div>
-  </div>
-</div>
+//   </script>
+{{-- // <!-- ✅ Modale Bootstrap proprement fermée -->
+// <div class="modal fade" id="clientModal" tabindex="-1" aria-hidden="true">
+//   <div class="modal-dialog modal-dialog-centered modal-lg">
+//     <div class="modal-content">
+//       <div class="modal-header">
+//         <h5 class="modal-title">Mon espace client</h5>
+//         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+//       </div>
+//       <div class="modal-body" id="clientModalContent">
+//         <!-- Contenu chargé par AJAX ici -->
+//       </div>
+//     </div>
+//   </div>
+// </div> --}}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // --- Boutons "Ajouter au panier" ---
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+            const type = this.dataset.type;
+            const id = this.dataset.id;
+            const nom = this.dataset.nom;
+            const prix = parseFloat(this.dataset.prix);
+            const prix_reduit = parseFloat(this.dataset.prix_reduit || prix);
+
+            let panier = [];
+
+            try {
+                panier = JSON.parse(getCookie('panier') || '[]');
+            } catch (e) {
+                console.error("Erreur de parsing du cookie panier", e);
+            }
+
+            // Vérifie si l'article est déjà présent
+            let item = panier.find(i => i.type === type && i.id == id);
+            if (item) {
+                item.quantite += 1;
+            } else {
+                panier.push({
+                    type,
+                    id,
+                    nom,
+                    prix,
+                    prix_reduit,
+                    quantite: 1
+                });
+            }
+
+            // Sauvegarde le panier dans le cookie
+            // document.cookie = "panier=" + JSON.stringify(panier) + ";path=/;max-age=" + (7 * 24 * 60 * 60);
+            document.cookie = "panier=" + encodeURIComponent(JSON.stringify(panier)) + "; path=/; max-age=" + (7 * 24 * 60 * 60) + "; SameSite=Lax";
+
+            alert("✅ Produit ajouté au panier !");
+        });
+    });
+
+    // --- Fonction pour lire un cookie ---
+    function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+        return null;
+    }
+});
+</script>
 
 </body>
 
